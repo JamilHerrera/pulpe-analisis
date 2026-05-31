@@ -7,34 +7,40 @@ interface NavigationProps {
 
 export default function Navigation({ currentView, onViewChange }: NavigationProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
-      <div className="max-w-md mx-auto flex justify-around py-3">
+    <nav className="fixed bottom-4 left-4 right-4 max-w-md mx-auto bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl shadow-2xl shadow-slate-200 z-50">
+      <div className="flex justify-around py-2">
         <button
           onClick={() => onViewChange('ventas')}
-          className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-            currentView === 'ventas' ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700'
+          className={`flex flex-col items-center gap-1 px-6 py-3 rounded-xl transition-all duration-200 ${
+            currentView === 'ventas'
+              ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-200'
+              : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
           }`}
         >
-          <ShoppingCart size={24} />
-          <span className="text-xs font-medium">Ventas</span>
+          <ShoppingCart size={22} />
+          <span className="text-xs font-semibold">Ventas</span>
         </button>
         <button
           onClick={() => onViewChange('semáforo')}
-          className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-            currentView === 'semáforo' ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700'
+          className={`flex flex-col items-center gap-1 px-6 py-3 rounded-xl transition-all duration-200 ${
+            currentView === 'semáforo'
+              ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-200'
+              : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
           }`}
         >
-          <BarChart3 size={24} />
-          <span className="text-xs font-medium">Semáforo</span>
+          <BarChart3 size={22} />
+          <span className="text-xs font-semibold">Semáforo</span>
         </button>
         <button
           onClick={() => onViewChange('pedidos')}
-          className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-            currentView === 'pedidos' ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700'
+          className={`flex flex-col items-center gap-1 px-6 py-3 rounded-xl transition-all duration-200 ${
+            currentView === 'pedidos'
+              ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-200'
+              : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
           }`}
         >
-          <ClipboardList size={24} />
-          <span className="text-xs font-medium">Pedidos</span>
+          <ClipboardList size={22} />
+          <span className="text-xs font-semibold">Pedidos</span>
         </button>
       </div>
     </nav>

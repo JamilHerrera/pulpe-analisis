@@ -169,7 +169,7 @@ export default function VentasExpress() {
   const totalCarrito = carrito.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0);
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 pb-24">
+    <div className="min-h-screen bg-slate-50 p-4 pb-28">
       {/* Header Premium - Caja Diaria */}
       <div className="mb-6">
         <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 shadow-lg shadow-emerald-200">

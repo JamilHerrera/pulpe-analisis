@@ -66,7 +66,7 @@ export default function SugerenciaPedidos() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 pb-24">
+    <div className="min-h-screen bg-slate-50 p-4 pb-28">
       {/* Header Premium */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-2">

@@ -89,7 +89,7 @@ export default function SemaforoRotacion() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 pb-24">
+    <div className="min-h-screen bg-slate-50 p-4 pb-28">
       {/* Header Premium */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-800 mb-2 tracking-tight">Semáforo de Rotación</h1>
