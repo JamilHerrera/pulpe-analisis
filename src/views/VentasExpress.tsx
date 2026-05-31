@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Plus, Trash2, AlertCircle } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, AlertCircle, DollarSign, TrendingUp, Package } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { Producto, CarritoItem } from '../types';
 
@@ -169,114 +169,176 @@ export default function VentasExpress() {
   const totalCarrito = carrito.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0);
 
   return (
-    <div className="p-4">
+    <div className="min-h-screen bg-slate-50 p-4 pb-24">
+      {/* Header Premium - Caja Diaria */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Ventas Express</h1>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-          <p className="text-sm text-blue-800 font-medium">
-            Caja Diaria: ${cajaDiaria.toFixed(2)}
-          </p>
+        <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 shadow-lg shadow-emerald-200">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <DollarSign className="text-white/90" size={24} />
+              <h1 className="text-xl font-bold text-white tracking-tight">Caja Diaria</h1>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+              <p className="text-xs font-semibold text-white/90">Hoy</p>
+            </div>
+          </div>
+          <div className="flex items-baseline gap-1">
+            <span className="text-4xl font-bold text-white tracking-tight">${cajaDiaria.toFixed(2)}</span>
+          </div>
+          <div className="mt-2 flex items-center gap-1 text-emerald-100">
+            <TrendingUp size={14} />
+            <p className="text-xs font-medium">Ventas registradas hoy</p>
+          </div>
         </div>
+        
         {sincronizacionPendiente && (
-          <div className="mt-2 bg-yellow-50 border border-yellow-200 rounded-lg p-2 flex items-center gap-2">
-            <AlertCircle size={16} className="text-yellow-600" />
-            <p className="text-xs text-yellow-800">Sincronización pendiente</p>
+          <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center gap-2 shadow-sm">
+            <div className="bg-amber-100 p-1.5 rounded-lg">
+              <AlertCircle size={16} className="text-amber-600" />
+            </div>
+            <p className="text-xs font-medium text-amber-800">Sincronización pendiente - Ventas guardadas localmente</p>
           </div>
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        {PRODUCTOS_COMUNES.map(producto => (
-          <button
-            key={producto.id}
-            onClick={() => agregarAlCarrito(producto)}
-            className="bg-white border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 rounded-xl p-4 transition-all active:scale-95 shadow-sm"
-          >
-            <p className="font-semibold text-gray-800 text-lg">{producto.nombre}</p>
-            <p className="text-blue-600 font-bold">${producto.precio.toFixed(2)}</p>
-          </button>
-        ))}
-      </div>
-
+      {/* Grid de Productos Premium */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Monto Libre
-        </label>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            value={montoLibre}
-            onChange={(e) => setMontoLibre(e.target.value)}
-            placeholder="0.00"
-            className="flex-1 border-2 border-gray-300 rounded-lg px-4 py-3 text-lg focus:border-blue-500 focus:outline-none"
-          />
-          <button
-            onClick={agregarMontoLibre}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-medium transition-colors"
-          >
-            <Plus size={24} />
-          </button>
+        <h2 className="text-lg font-bold text-slate-800 mb-4 tracking-tight">Productos Populares</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {PRODUCTOS_COMUNES.map(producto => (
+            <button
+              key={producto.id}
+              onClick={() => agregarAlCarrito(producto)}
+              className="group bg-white border border-slate-200 hover:border-emerald-400 hover:shadow-md hover:shadow-emerald-100 rounded-2xl p-4 transition-all duration-200 active:scale-95 shadow-sm relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-emerald-50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="bg-emerald-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3 group-hover:bg-emerald-100 transition-colors">
+                  <Package size={20} className="text-emerald-600" />
+                </div>
+                <p className="font-semibold text-slate-800 text-base mb-1 tracking-tight">{producto.nombre}</p>
+                <p className="text-emerald-600 font-bold text-lg">${producto.precio.toFixed(2)}</p>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-4 mb-6">
-        <h2 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-          <ShoppingCart size={20} />
-          Carrito
-        </h2>
+      {/* Monto Libre Premium */}
+      <div className="mb-6">
+        <h2 className="text-lg font-bold text-slate-800 mb-4 tracking-tight">Monto Libre</h2>
+        <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+          <div className="flex gap-3">
+            <div className="flex-1 relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold">$</span>
+              <input
+                type="number"
+                value={montoLibre}
+                onChange={(e) => setMontoLibre(e.target.value)}
+                placeholder="0.00"
+                className="w-full bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 focus:bg-white rounded-xl pl-8 pr-4 py-3 text-lg font-semibold text-slate-800 focus:outline-none transition-all"
+              />
+            </div>
+            <button
+              onClick={agregarMontoLibre}
+              className="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white px-5 rounded-xl font-semibold transition-all duration-200 shadow-md shadow-emerald-200 hover:shadow-lg hover:shadow-emerald-300 flex items-center justify-center"
+            >
+              <Plus size={24} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Carrito Premium */}
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-slate-800 tracking-tight flex items-center gap-2">
+            <ShoppingCart size={20} className="text-emerald-600" />
+            Carrito de Compras
+          </h2>
+          <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-full">
+            {carrito.length} {carrito.length === 1 ? 'item' : 'items'}
+          </span>
+        </div>
+        
         {carrito.length === 0 ? (
-          <p className="text-gray-500 text-center py-4">El carrito está vacío</p>
+          <div className="text-center py-8">
+            <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+              <ShoppingCart size={28} className="text-slate-400" />
+            </div>
+            <p className="text-slate-500 font-medium">El carrito está vacío</p>
+            <p className="text-slate-400 text-sm mt-1">Agrega productos para comenzar</p>
+          </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {carrito.map(item => (
               <div
                 key={item.producto.id}
-                className="flex justify-between items-center bg-white rounded-lg p-3 shadow-sm"
+                className="flex justify-between items-center bg-slate-50 rounded-xl p-3 hover:bg-slate-100 transition-colors"
               >
-                <div>
-                  <p className="font-medium text-gray-800">{item.producto.nombre}</p>
-                  <p className="text-sm text-gray-500">
-                    {item.cantidad} x ${item.producto.precio.toFixed(2)}
-                  </p>
+                <div className="flex items-center gap-3">
+                  <div className="bg-white w-10 h-10 rounded-lg flex items-center justify-center shadow-sm">
+                    <Package size={18} className="text-slate-600" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-800 text-sm">{item.producto.nombre}</p>
+                    <p className="text-slate-500 text-xs">
+                      {item.cantidad} x ${item.producto.precio.toFixed(2)}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <p className="font-bold text-gray-800">
+                  <p className="font-bold text-slate-800">
                     ${(item.producto.precio * item.cantidad).toFixed(2)}
                   </p>
                   <button
                     onClick={() => eliminarDelCarrito(item.producto.id)}
-                    className="text-red-500 hover:text-red-700 transition-colors"
+                    className="bg-red-50 hover:bg-red-100 text-red-500 p-2 rounded-lg transition-colors"
                   >
-                    <Trash2 size={18} />
+                    <Trash2 size={16} />
                   </button>
                 </div>
               </div>
             ))}
-            <div className="border-t-2 border-gray-200 pt-3 mt-3">
+            <div className="border-t-2 border-slate-200 pt-4 mt-4">
               <div className="flex justify-between items-center">
-                <p className="text-lg font-bold text-gray-800">Total:</p>
-                <p className="text-2xl font-bold text-blue-600">${totalCarrito.toFixed(2)}</p>
+                <p className="text-base font-bold text-slate-600">Total a pagar:</p>
+                <p className="text-3xl font-bold text-emerald-600">${totalCarrito.toFixed(2)}</p>
               </div>
             </div>
           </div>
         )}
       </div>
 
+      {/* Botón Confirmar Venta Premium */}
       <button
         onClick={confirmarVenta}
         disabled={carrito.length === 0}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-4 rounded-xl font-bold text-lg transition-colors shadow-lg"
+        className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed text-white py-4 rounded-2xl font-bold text-lg transition-all duration-200 shadow-lg shadow-emerald-200 hover:shadow-xl hover:shadow-emerald-300 active:scale-[0.98] flex items-center justify-center gap-2"
       >
+        <ShoppingCart size={24} />
         Confirmar Venta
       </button>
 
+      {/* Alerta Premium */}
       {mostrarAlerta && (
         <div
-          className={`fixed top-4 left-4 right-4 max-w-md mx-auto p-4 rounded-lg shadow-lg z-50 ${
-            tipoAlerta === 'success' ? 'bg-green-500' : 'bg-red-500'
-          } text-white`}
+          className={`fixed top-4 left-4 right-4 max-w-md mx-auto p-4 rounded-2xl shadow-2xl z-50 ${
+            tipoAlerta === 'success' 
+              ? 'bg-gradient-to-r from-emerald-500 to-teal-600' 
+              : 'bg-gradient-to-r from-red-500 to-rose-600'
+          } text-white backdrop-blur-sm`}
         >
-          <p className="font-medium text-center">{mensajeAlerta}</p>
+          <div className="flex items-center justify-center gap-2">
+            {tipoAlerta === 'success' ? (
+              <div className="bg-white/20 p-2 rounded-full">
+                <ShoppingCart size={20} />
+              </div>
+            ) : (
+              <AlertCircle size={24} />
+            )}
+            <p className="font-semibold text-center">{mensajeAlerta}</p>
+          </div>
         </div>
       )}
     </div>
