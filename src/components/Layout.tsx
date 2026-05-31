@@ -6,8 +6,8 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white min-h-screen rounded-3xl shadow-2xl shadow-slate-300 relative">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4 relative">
+      <div className="w-full max-w-md bg-white min-h-screen rounded-3xl shadow-2xl shadow-slate-300 relative overflow-visible">
         {children}
       </div>
     </div>
