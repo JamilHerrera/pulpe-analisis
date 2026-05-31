@@ -1,3 +1,4 @@
+// Vista principal del sistema PulpeAnálisis
 import { useState } from 'react';
 import Layout from './components/Layout';
 import Navigation from './components/Navigation';
