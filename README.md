@@ -7,7 +7,7 @@ Este proyecto es el entregable final para el curso de **Ingeniería de Software 
 
 ## 👥 Información del Proyecto
 * **Autor:** Osman Herrera
-* **Asignatura:** Ingeniería de Software I
+* **Asignatura:** Ingeniería de Software I 858
 * **Dominio Seleccionado:** Pulpería de barrio
 * **Cliente Real:** Dueño de la pulpería local
 * **Ubicación:** Honduras
