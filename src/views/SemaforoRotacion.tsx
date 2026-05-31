@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, Minus, TrendingDown, AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Flame, Activity, Zap } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { ProductoRotacion } from '../types';
 
@@ -55,110 +55,152 @@ export default function SemaforoRotacion() {
 
   const productosFiltrados = productos.filter(p => p.categoria === pestañaActiva);
 
-  const colores = {
-    alta: 'bg-red-500',
-    media: 'bg-yellow-500',
-    baja: 'bg-blue-500',
-  };
-
-  const coloresTexto = {
-    alta: 'text-red-600',
-    media: 'text-yellow-600',
-    baja: 'text-blue-600',
-  };
-
-  const iconos = {
-    alta: TrendingUp,
-    media: Minus,
-    baja: TrendingDown,
+  const configuracionCategoria = {
+    alta: {
+      gradiente: 'from-rose-500 to-red-600',
+      gradienteSuave: 'from-rose-50 to-red-100',
+      borde: 'border-rose-300',
+      texto: 'text-rose-700',
+      icono: Flame,
+      etiqueta: 'Alta Rotación',
+      descripcion: 'Productos estrella con alta demanda',
+      sombra: 'shadow-rose-200',
+    },
+    media: {
+      gradiente: 'from-amber-400 to-orange-500',
+      gradienteSuave: 'from-amber-50 to-orange-100',
+      borde: 'border-amber-300',
+      texto: 'text-amber-700',
+      icono: Activity,
+      etiqueta: 'Rotación Media',
+      descripcion: 'Movimiento constante pero pausado',
+      sombra: 'shadow-amber-200',
+    },
+    baja: {
+      gradiente: 'from-blue-500 to-indigo-600',
+      gradienteSuave: 'from-blue-50 to-indigo-100',
+      borde: 'border-blue-300',
+      texto: 'text-blue-700',
+      icono: Zap,
+      etiqueta: 'Baja Rotación',
+      descripcion: 'Productos estancados en riesgo',
+      sombra: 'shadow-blue-200',
+    },
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Semáforo de Rotación</h1>
-      <p className="text-sm text-gray-600 mb-6">
-        Análisis de ventas de la última semana
-      </p>
+    <div className="min-h-screen bg-slate-50 p-4 pb-24">
+      {/* Header Premium */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2 tracking-tight">Semáforo de Rotación</h1>
+        <p className="text-sm text-slate-600">
+          Análisis de ventas de la última semana
+        </p>
+      </div>
 
       {cargando ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="flex justify-center items-center py-16">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-14 w-14 border-4 border-slate-200 border-t-emerald-500"></div>
+          </div>
         </div>
       ) : (
         <>
+          {/* Pestañas Premium con Gradientes */}
           <div className="flex gap-2 mb-6">
             <button
               onClick={() => setPestañaActiva('alta')}
-              className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all ${
+              className={`flex-1 py-3 px-3 rounded-2xl font-bold transition-all duration-200 ${
                 pestañaActiva === 'alta'
-                  ? 'bg-red-500 text-white shadow-lg'
-                  : 'bg-red-100 text-red-600 hover:bg-red-200'
+                  ? 'bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-lg shadow-rose-200'
+                  : 'bg-white text-slate-600 hover:bg-rose-50 border-2 border-slate-200 hover:border-rose-300'
               }`}
             >
-              <div className="flex items-center justify-center gap-2">
-                <TrendingUp size={20} />
-                <span>Alta</span>
+              <div className="flex flex-col items-center gap-1">
+                <Flame size={22} />
+                <span className="text-xs">Alta</span>
               </div>
             </button>
             <button
               onClick={() => setPestañaActiva('media')}
-              className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all ${
+              className={`flex-1 py-3 px-3 rounded-2xl font-bold transition-all duration-200 ${
                 pestañaActiva === 'media'
-                  ? 'bg-yellow-500 text-white shadow-lg'
-                  : 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200'
+                  ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-200'
+                  : 'bg-white text-slate-600 hover:bg-amber-50 border-2 border-slate-200 hover:border-amber-300'
               }`}
             >
-              <div className="flex items-center justify-center gap-2">
-                <Minus size={20} />
-                <span>Media</span>
+              <div className="flex flex-col items-center gap-1">
+                <Activity size={22} />
+                <span className="text-xs">Media</span>
               </div>
             </button>
             <button
               onClick={() => setPestañaActiva('baja')}
-              className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all ${
+              className={`flex-1 py-3 px-3 rounded-2xl font-bold transition-all duration-200 ${
                 pestañaActiva === 'baja'
-                  ? 'bg-blue-500 text-white shadow-lg'
-                  : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-200'
+                  : 'bg-white text-slate-600 hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-300'
               }`}
             >
-              <div className="flex items-center justify-center gap-2">
-                <TrendingDown size={20} />
-                <span>Baja</span>
+              <div className="flex flex-col items-center gap-1">
+                <Zap size={22} />
+                <span className="text-xs">Baja</span>
               </div>
             </button>
           </div>
 
+          {/* Tarjeta de Categoría Activa */}
+          <div className={`mb-6 bg-gradient-to-r ${configuracionCategoria[pestañaActiva].gradienteSuave} rounded-2xl p-4 border-2 ${configuracionCategoria[pestañaActiva].borde}`}>
+            <div className="flex items-center gap-3">
+              <div className={`bg-gradient-to-r ${configuracionCategoria[pestañaActiva].gradiente} p-3 rounded-xl shadow-md ${configuracionCategoria[pestañaActiva].sombra}`}>
+                {(() => {
+                  const Icono = configuracionCategoria[pestañaActiva].icono;
+                  return <Icono size={24} className="text-white" />;
+                })()}
+              </div>
+              <div>
+                <h3 className={`font-bold text-lg ${configuracionCategoria[pestañaActiva].texto}`}>
+                  {configuracionCategoria[pestañaActiva].etiqueta}
+                </h3>
+                <p className="text-sm text-slate-600">{configuracionCategoria[pestañaActiva].descripcion}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Lista de Productos Premium */}
           <div className="space-y-3">
             {productosFiltrados.length === 0 ? (
-              <div className="text-center py-8 bg-gray-50 rounded-xl">
-                <AlertTriangle size={48} className="mx-auto text-gray-400 mb-3" />
-                <p className="text-gray-500">No hay productos en esta categoría</p>
+              <div className="text-center py-8 bg-white rounded-2xl border-2 border-slate-200 shadow-sm">
+                <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <AlertTriangle size={32} className="text-slate-400" />
+                </div>
+                <p className="text-slate-600 font-medium">No hay productos en esta categoría</p>
+                <p className="text-slate-400 text-sm mt-1">Registra más ventas para ver el análisis</p>
               </div>
             ) : (
               productosFiltrados.map((producto, index) => {
-                const Icono = iconos[producto.categoria];
+                const config = configuracionCategoria[producto.categoria];
+                const Icono = config.icono;
                 return (
                   <div
                     key={index}
-                    className="bg-white border-2 border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+                    className="bg-white border-2 border-slate-200 hover:border-slate-300 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all duration-200 group"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className={`${colores[producto.categoria]} p-2 rounded-lg`}>
-                          <Icono size={20} className="text-white" />
+                        <div className={`bg-gradient-to-r ${config.gradienteSuave} p-3 rounded-xl group-hover:scale-110 transition-transform`}>
+                          <Icono size={20} className={config.texto} />
                         </div>
                         <div>
-                          <p className="font-bold text-gray-800 text-lg">{producto.nombre}</p>
-                          <p className={`text-sm font-medium ${coloresTexto[producto.categoria]}`}>
-                            {producto.categoria === 'alta' && 'Alta rotación'}
-                            {producto.categoria === 'media' && 'Rotación media'}
-                            {producto.categoria === 'baja' && 'Baja rotación'}
+                          <p className="font-bold text-slate-800 text-base tracking-tight">{producto.nombre}</p>
+                          <p className={`text-xs font-medium ${config.texto}`}>
+                            {config.etiqueta}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-gray-800">{producto.total_unidades}</p>
-                        <p className="text-xs text-gray-500">unidades</p>
+                        <p className="text-3xl font-bold text-slate-800">{producto.total_unidades}</p>
+                        <p className="text-xs text-slate-500 font-medium">unidades vendidas</p>
                       </div>
                     </div>
                   </div>
@@ -167,11 +209,14 @@ export default function SemaforoRotacion() {
             )}
           </div>
 
+          {/* Estado sin datos */}
           {productos.length === 0 && !cargando && (
-            <div className="text-center py-8 bg-gray-50 rounded-xl">
-              <AlertTriangle size={48} className="mx-auto text-gray-400 mb-3" />
-              <p className="text-gray-500">No hay datos de ventas disponibles</p>
-              <p className="text-sm text-gray-400 mt-2">Registra algunas ventas para ver el análisis</p>
+            <div className="text-center py-8 bg-white rounded-2xl border-2 border-slate-200 shadow-sm">
+              <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                <AlertTriangle size={32} className="text-slate-400" />
+              </div>
+              <p className="text-slate-600 font-medium">No hay datos de ventas disponibles</p>
+              <p className="text-slate-400 text-sm mt-1">Registra algunas ventas para ver el análisis</p>
             </div>
           )}
         </>
